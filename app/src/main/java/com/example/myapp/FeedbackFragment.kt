@@ -2,6 +2,7 @@ package com.example.myapp
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,7 +39,8 @@ class FeedbackFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                FeedbackScreen {
+                val osVersion = remember { "Android ${Build.VERSION.RELEASE}" }
+                FeedbackScreen(osVersion) {
                     activity?.onBackPressed()
                 }
             }
@@ -46,7 +49,7 @@ class FeedbackFragment : Fragment() {
 }
 
 @Composable
-fun FeedbackScreen(onBackPressed: () -> Unit) {
+fun FeedbackScreen(osVersion: String, onBackPressed: () -> Unit) {
     val context = LocalContext.current
 
     Column(
@@ -71,43 +74,58 @@ fun FeedbackScreen(onBackPressed: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-           // Text(text = "Обратная связь", fontSize = 20.sp, color = Color.White)
-           // Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Версия приложения", color = Color.White)
-            Text(text = "3.10.7", color = Color.White)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Номер сборки", color = Color.White)
-            Text(text = "300.183", color = Color.White)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Версия ОС", color = Color.White)
-            Text(text = "14.6", color = Color.White)
-            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Версия приложения", fontSize = 20.sp, color = Color.White)
+                Text(text = "3.10.7", fontSize = 20.sp, color = Color.White)
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Номер сборки", fontSize = 20.sp, color = Color.White)
+                Text(text = "300.183", fontSize = 20.sp, color = Color.White)
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Версия ОС", fontSize = 20.sp, color = Color.White)
+                Text(text = osVersion, fontSize = 20.sp, color = Color.White)
+            }
+            Spacer(modifier = Modifier.height(32.dp))
             Button(
                 onClick = {
                     Toast.makeText(context, "Сообщение отправлено", Toast.LENGTH_SHORT).show()
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x33808093)), // Полупрозрачный цвет кнопки #80809333
-                shape = RoundedCornerShape(
-                    topStartPercent = 50,
-                    topEndPercent = 50,
-                    bottomStartPercent = 50,
-                    bottomEndPercent = 50
-                )
+                shape = RoundedCornerShape(50.dp)
             ) {
                 Text(
                     text = "Сообщить о проблеме",
                     color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.weight(1f))
 
             val annotatedText = buildAnnotatedString {
-                append("АО «ЭР-Телеком Холдинг»\n")
+                pushStringAnnotation(tag = "PHONE", annotation = "tel:+73420000000")
+                withStyle(style = SpanStyle(color = Color.Gray)) {
+                    append("АО «ЭР-Телеком Холдинг»\n")
+                }
                 pushStringAnnotation(tag = "PHONE", annotation = "tel:+73420000000")
                 withStyle(style = SpanStyle(color = Color.White)) {
                     append("+7 342 000 00 00\n")

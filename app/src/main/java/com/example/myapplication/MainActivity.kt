@@ -35,18 +35,13 @@ class MainActivity : ComponentActivity() {
                     },
                     modifier = Modifier.padding(20.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x33808093)), // Цвет кнопки #808093 с 20% прозрачностью
-                    shape = RoundedCornerShape(
-                        topStartPercent = 50,
-                        topEndPercent = 50,
-                        bottomStartPercent = 50,
-                        bottomEndPercent = 50
-                    )
+                    shape = RoundedCornerShape(50.dp)
                 ) {
                     Text(
                         text = "Обратная связь",
                         color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             }
