@@ -38,31 +38,5 @@ class SecondActivity : FragmentActivity() {
 
 @Composable
 fun FragmentContainer() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF000033)), // Цвет фона #000033
-        contentAlignment = Alignment.Center
-    ) {
-        Button(
-            onClick = {
-                // Переход на следующее действие или фрагмент
-            },
-            modifier = Modifier.padding(16.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x33808093)), // Цвет кнопки #808093 с 20% прозрачностью
-            shape = RoundedCornerShape(
-                topStartPercent = 50,
-                topEndPercent = 50,
-                bottomStartPercent = 50,
-                bottomEndPercent = 50
-            )
-        ) {
-            Text(
-                text = "Сообщить о проблеме",
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
+
 }
